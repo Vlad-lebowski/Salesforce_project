@@ -6,10 +6,31 @@ trigger AstapenkoToDoTrigger on To_Do__c (
         after update,
         after delete,
         after undelete) {
+    if (Trigger.isBefore && Trigger.isInsert) {
+
+    }
+
+    if (Trigger.isBefore && Trigger.isUpdate) {
+
+    }
+
+    if (Trigger.isBefore && Trigger.isDelete) {
+
+    }
+
     if (Trigger.isAfter && Trigger.isInsert) {
-        List<To_Do__c> toDos = Trigger.new;
-        for (To_Do__c toDo : toDos) {
-            AstapenkoCalloutClassForToDo.makePostCallout(toDo.Name, toDo.Status__c, toDo.Is_Done__c, toDo.Id);
-        }
+        AstapenkoToDoTriggerHandler.handleAfterInsert(Trigger.new, Trigger.newMap);
+    }
+
+    if (Trigger.isAfter && Trigger.isUpdate) {
+        AstapenkoToDoTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.newMap, Trigger.old, Trigger.oldMap);
+    }
+
+    if (Trigger.isAfter && Trigger.isDelete) {
+        AstapenkoToDoTriggerHandler.handleAfterDelete(Trigger.old, Trigger.oldMap);
+    }
+
+    if (Trigger.isAfter && Trigger.isUndelete) {
+
     }
 }
