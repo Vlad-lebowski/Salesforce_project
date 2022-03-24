@@ -2,6 +2,7 @@ public with sharing class AstapenkoCalloutClassForToDo {
 
     @Future(Callout=true)
     public static void makePostCallout(String toDoId, String toDoName, String status, Boolean isDone, String recordType) {
+        AstapenkoToDoTriggerHandler.recordBeingProcessed = true;
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         request.setEndpoint('callout:SF/services/apexrest/To_Do__c/' + toDoId);
@@ -14,7 +15,13 @@ public with sharing class AstapenkoCalloutClassForToDo {
                     response.getStatusCode() + ' ' + response.getStatus());
         } else {
             System.debug(response.getBody());
+            Map<String, Object> params = (Map<String, Object>)JSON.deserializeUntyped(response.getBody());
+            System.debug(params);
+            To_Do__c toDo = [SELECT Id, External_Id__c FROM To_Do__c WHERE Id =:toDoId LIMIT 1];
+            toDo.put('External_Id__c', params.get('Id'));
+            update toDo;
         }
+        AstapenkoToDoTriggerHandler.recordBeingProcessed = false;
     }
 
     @Future(Callout=true)
@@ -43,7 +50,7 @@ public with sharing class AstapenkoCalloutClassForToDo {
         request.setBody('{"name":"' + toDoName + '", "status":"' + status + '", "isDone":"' + isDone + '"}');
         HttpResponse response = http.send(request);
         if(response.getStatusCode() == 200) {
-            System.debug('Upserted the following account:');
+            System.debug('Upserted the following To Do:');
             System.debug(response.getBody());
         } else {
             System.debug('The status code returned was not expected: ' +

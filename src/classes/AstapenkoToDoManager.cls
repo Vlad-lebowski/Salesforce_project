@@ -4,30 +4,35 @@ global with sharing class AstapenkoToDoManager {
     global static To_Do__c getToDo() {
         RestRequest request = RestContext.request;
         String toDoId = request.requestURI.substring(request.requestURI.lastIndexOf('/')+1);
-        To_Do__c result = [SELECT Id, Name, Status__c, Is_Done__c FROM To_Do__c WHERE Id=:toDoId LIMIT 1];
+        To_Do__c result = [SELECT Id, Name, Status__c, Is_Done__c, External_Id__c FROM To_Do__c WHERE External_Id__c=:toDoId LIMIT 1];
         return result;
     }
 
     @HttpPost
-    global static Id createToDo(String name, String status, Boolean isDone, String recordType) {
+    global static To_Do__c createToDo(String name, String status, Boolean isDone, String recordType) {
+        AstapenkoToDoTriggerHandler.recordBeingProcessed = true;
         RestRequest request = RestContext.request;
         String externalId = request.requestURI.substring(request.requestURI.lastIndexOf('/')+1);
         String recordTypeId = Schema.SObjectType.To_Do__c.getRecordTypeInfosByName().get(recordType).getRecordTypeId();
         To_Do__c thisToDo = new To_Do__c(RecordTypeId = recordTypeId, Name = name, Status__c = status, Is_Done__c = isDone, External_Id__c = externalId);
         insert thisToDo;
-        return thisToDo.Id;
+        AstapenkoToDoTriggerHandler.recordBeingProcessed = false;
+        return thisToDo;
     }
 
     @HttpDelete
     global static void deleteToDo() {
+        AstapenkoToDoTriggerHandler.recordBeingProcessed = true;
         RestRequest request = RestContext.request;
         String toDoId = request.requestURI.substring(request.requestURI.lastIndexOf('/')+1);
         To_Do__c thisToDo = [SELECT Id FROM To_Do__c WHERE External_Id__c = :toDoId LIMIT 1];
         delete thisToDo;
+        AstapenkoToDoTriggerHandler.recordBeingProcessed = false;
     }
 
     @HttpPut
     global static Id upsertToDo(String name, String status, Boolean isDone) {
+        AstapenkoToDoTriggerHandler.recordBeingProcessed = true;
         RestRequest request = RestContext.request;
         String externalId = request.requestURI.substring(request.requestURI.lastIndexOf('/')+1);
         List<To_Do__c> toDos = [SELECT Id FROM To_Do__c WHERE External_Id__c = :externalId LIMIT 1];
@@ -41,6 +46,7 @@ global with sharing class AstapenkoToDoManager {
             thisToDo.Is_Done__c = isDone;
         }
         upsert thisToDo;
+        AstapenkoToDoTriggerHandler.recordBeingProcessed = false;
         // Return the to_do ID.
         return thisToDo.Id;
     }
