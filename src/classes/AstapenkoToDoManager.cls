@@ -52,24 +52,22 @@ global with sharing class AstapenkoToDoManager {
     }
 
     @HttpPatch
-    global static Id updateAccountFields() {
+    global static Id updateAccountFields(String name, String status, Boolean isDone) {
+        AstapenkoToDoTriggerHandler.recordBeingProcessed = true;
         RestRequest request = RestContext.request;
-        String toDoId = request.requestURI.substring(request.requestURI.lastIndexOf('/')+1);
-        List<To_Do__c> toDos = [SELECT Id FROM To_Do__c WHERE Id = :toDoId LIMIT 1];
+        String externalId = request.requestURI.substring(request.requestURI.lastIndexOf('/')+1);
+        List<To_Do__c> toDos = [SELECT Id FROM To_Do__c WHERE External_Id__c = :externalId LIMIT 1];
         To_Do__c thisToDo;
         if (toDos.size() == 0) {
             return null;
         } else {
             thisToDo = toDos.get(0);
-        }
-        // Deserialize the JSON string into name-value pairs
-        Map<String, Object> params = (Map<String, Object>)JSON.deserializeUntyped(request.requestBody.toString());
-        // Iterate through each parameter field and value
-        for(String fieldName : params.keySet()) {
-            // Set the field and value on the Account sObject
-            thisToDo.put(fieldName, params.get(fieldName));
+            thisToDo.Name = name;
+            thisToDo.Status__c = status;
+            thisToDo.Is_Done__c = isDone;
         }
         update thisToDo;
+        AstapenkoToDoTriggerHandler.recordBeingProcessed = false;
         return thisToDo.Id;
     }
 }
