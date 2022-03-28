@@ -1,33 +1,20 @@
 public class QueueTriggerHandlerHelper {
     public static void assignmentQueue(List<To_Do__c> todos) {
-        List<Group> queues = [SELECT id, name FROM Group WHERE Type = 'Queue'];
-        List<RecordType> recTypes = [SELECT Id, Name FROM RecordType LIMIT 3];
-
+        Group adminQueue = [SELECT Id, Name FROM Group WHERE Type = 'Queue' AND Name = 'Admin ToDos' LIMIT 1];
+        Group securityQueue = [SELECT Id, Name FROM Group WHERE Type = 'Queue' AND Name = 'Security ToDos' LIMIT 1];
+        Group randomQueue = [SELECT Id, Name FROM Group WHERE Type = 'Queue' AND Name = 'Random ToDos' LIMIT 1];
+        Map<Id, User> adminUsers = new Map<Id, User>([SELECT Id FROM User WHERE Id IN (SELECT UserorGroupId FROM GroupMember WHERE Group.Type = 'Queue' AND Group.Name = 'Admin ToDos') AND isActive = true]);
+        Map<Id, User> securityUsers = new Map<Id, User>([SELECT Id FROM User WHERE Id IN (SELECT UserorGroupId FROM GroupMember WHERE Group.Type = 'Queue' AND Group.Name = 'Security ToDos') AND isActive = true]);
+        Map<Id, User> randomUsers = new Map<Id, User>([SELECT Id FROM User WHERE Id IN (SELECT UserorGroupId FROM GroupMember WHERE Group.Type = 'Queue' AND Group.Name = 'Random ToDos') AND isActive = true]);
+        
         for(To_Do__c todo : todos) {
-            string recordtypeName =
-            Schema.SObjectType.To_Do__c.getRecordTypeInfosById().get(todo.recordtypeid).getname();
-            
-            if(recordtypeName == 'Today') {
-                for(Group queue : queues) {
-                    if(queue.Name == 'Today ToDos' && todo.OwnerId != queue.Id) {
-                        todo.OwnerId = queue.Id;
-                    }
-                }
-            }
-
-            else if(recordtypeName == 'Tomorrow') {
-                for(Group queue : queues) {
-                    if(queue.Name == 'Tomorrow ToDos' && todo.OwnerId != queue.Id) {
-                        todo.OwnerId = queue.Id;
-                    }
-                }
-            }
-
-            else if(recordtypeName == 'Later') {
-                for(Group queue : queues) {
-                    if(queue.Name == 'Later ToDos' && todo.OwnerId != queue.Id) {
-                        todo.OwnerId = queue.Id;
-                    }
+            if(todo.IsPersonal__c == false) {
+                if(adminUsers.keyset().contains(todo.OwnerId)) {
+                    todo.OwnerId = adminQueue.Id;
+                } else if(securityUsers.keyset().contains(todo.OwnerId)) {
+                    todo.OwnerId = securityQueue.Id;
+                } else if(randomUsers.keyset().contains(todo.OwnerId)) {
+                    todo.OwnerId = randomQueue.Id;
                 }
             }
         }
