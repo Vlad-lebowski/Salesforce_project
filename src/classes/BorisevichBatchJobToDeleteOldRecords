@@ -1,0 +1,15 @@
+public class BorisevichBatchJobToDeleteOldRecords implements Database.Batchable<sObject> {
+    
+    public Database.QueryLocator start(Database.BatchableContext bc) {
+        Date s = system.today()-90;
+        return Database.getQueryLocator('SELECT id FROM To_Do__c WHERE createdDate <:S');
+    }
+    public void execute(Database.BatchableContext bc, List<To_Do__c> records){
+        AstapenkoToDoTriggerHandler.recordBeingProcessed = true;
+        delete records;
+        AstapenkoToDoTriggerHandler.recordBeingProcessed = false;
+    }
+    public void finish(Database.BatchableContext bc){
+        // execute any post-processing operations
+    }
+}
