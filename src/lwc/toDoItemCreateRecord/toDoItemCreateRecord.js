@@ -7,8 +7,8 @@ import TO_DO_OBJECT from '@salesforce/schema/To_Do__c';
 import NAME_FIELD from '@salesforce/schema/To_Do__c.Name';
 import STATUS_FIELD from '@salesforce/schema/To_Do__c.Status__c';
 import RECORD_TYPE_ID_FIELD from '@salesforce/schema/To_Do__c.RecordTypeId';
-import getRecordTypeNames from '@salesforce/apex/AstapenkoToDoItemController.getRecordTypeNames';
-import getRecordTypeId from '@salesforce/apex/AstapenkoToDoItemController.getRecordTypeId';
+import getRecordTypeNames from '@salesforce/apex/ToDoController.getRecordTypeNames';
+import getRecordTypeId from '@salesforce/apex/ToDoController.getRecordTypeId';
 
 import { publish, MessageContext } from 'lightning/messageService';
 import TO_DO_CREATE_CHANNEL from '@salesforce/messageChannel/ToDoCreate__c';

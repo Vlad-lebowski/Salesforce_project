@@ -4,7 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 import { deleteRecord } from 'lightning/uiRecordApi';
 import { NavigationMixin } from 'lightning/navigation';
-import findToDoItems from '@salesforce/apex/AstapenkoToDoItemController.findToDoItems';
+import findToDoItems from '@salesforce/apex/ToDoController.findToDoItems';
 
 // Import message service features required for subscribing and the message channel
 import { subscribe, MessageContext } from 'lightning/messageService';

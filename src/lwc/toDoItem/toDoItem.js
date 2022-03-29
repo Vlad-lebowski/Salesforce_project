@@ -1,5 +1,5 @@
 import { LightningElement, api, wire, track } from 'lwc';
-import getRecordTypeName from '@salesforce/apex/AstapenkoToDoItemController.getRecordTypeName';
+import getRecordTypeName from '@salesforce/apex/ToDoController.getRecordTypeName';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import RECORD_TYPE_ID_FIELD from '@salesforce/schema/To_Do__c.RecordTypeId';
 
