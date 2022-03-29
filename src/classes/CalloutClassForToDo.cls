@@ -1,8 +1,7 @@
-public with sharing class AstapenkoCalloutClassForToDo {
-
+public with sharing class CalloutClassForToDo {
     @Future(Callout=true)
     public static void makePostCallout(String toDoId, String toDoName, String status, Boolean isDone, String recordType) {
-        AstapenkoToDoTriggerHandler.recordBeingProcessed = true;
+        ToDoTriggerHandler.recordBeingProcessed = true;
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         request.setEndpoint('callout:SF/services/apexrest/To_Do__c/' + toDoId);
@@ -21,7 +20,7 @@ public with sharing class AstapenkoCalloutClassForToDo {
             toDo.put('External_Id__c', params.get('Id'));
             update toDo;
         }
-        AstapenkoToDoTriggerHandler.recordBeingProcessed = false;
+        ToDoTriggerHandler.recordBeingProcessed = false;
     }
 
     @Future(Callout=true)

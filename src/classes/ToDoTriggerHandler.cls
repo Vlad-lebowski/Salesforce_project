@@ -1,5 +1,4 @@
-public with sharing class AstapenkoToDoTriggerHandler {
-
+public with sharing class ToDoTriggerHandler {
     public static Boolean recordBeingProcessed = false;
 
     public static void handleBeforeInsert(List<To_Do__c> newList) {
@@ -15,30 +14,30 @@ public with sharing class AstapenkoToDoTriggerHandler {
     }
 
     public static void handleAfterInsert(List<To_Do__c> newList, Map<Id, To_Do__c> newMap) {
-        if (AstapenkoToDoTriggerHandler.recordBeingProcessed == true) {
+        if (ToDoTriggerHandler.recordBeingProcessed == true) {
             return;
         }
-        AstapenkoToDoTriggerHandler.recordBeingProcessed = true;
-        AstapenkoToDoHelper.initializePostCallout(newList);
-        AstapenkoToDoTriggerHandler.recordBeingProcessed = false;
+        ToDoTriggerHandler.recordBeingProcessed = true;
+        ToDoHelper.initializePostCallout(newList);
+        ToDoTriggerHandler.recordBeingProcessed = false;
     }
 
     public static void handleAfterUpdate(List<To_Do__c> newList, Map<Id, To_Do__c> newMap, List<To_Do__c> oldList, Map<Id, To_Do__c> oldMap) {
-        if (AstapenkoToDoTriggerHandler.recordBeingProcessed == true) {
+        if (ToDoTriggerHandler.recordBeingProcessed == true) {
             return;
         }
-        AstapenkoToDoTriggerHandler.recordBeingProcessed = true;
-        AstapenkoToDoHelper.initializePutCallout(newList);
-        AstapenkoToDoTriggerHandler.recordBeingProcessed = false;
+        ToDoTriggerHandler.recordBeingProcessed = true;
+        ToDoHelper.initializePutCallout(newList);
+        ToDoTriggerHandler.recordBeingProcessed = false;
     }
 
     public static void handleAfterDelete(List<To_Do__c> oldList, Map<Id, To_Do__c> oldMap) {
-        if (AstapenkoToDoTriggerHandler.recordBeingProcessed == true) {
+        if (ToDoTriggerHandler.recordBeingProcessed == true) {
             return;
         }
-        AstapenkoToDoTriggerHandler.recordBeingProcessed = true;
-        AstapenkoToDoHelper.initializeDeleteCallout(oldList);
-        AstapenkoToDoTriggerHandler.recordBeingProcessed = false;
+        ToDoTriggerHandler.recordBeingProcessed = true;
+        ToDoHelper.initializeDeleteCallout(oldList);
+        ToDoTriggerHandler.recordBeingProcessed = false;
     }
 
     public static void handleAfterUndelete(List<To_Do__c> newList, Map<Id, To_Do__c> newMap) {

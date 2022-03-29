@@ -1,28 +1,29 @@
 <template>
     <lightning-card title="To Do Item List" icon-name="standard:logging">
         <template if:true={toDoItems}>
-            <lightning-layout class="slds-var-m-around_medium">
-                <lightning-layout-item class="wide">
-                    <template for:each={toDoItems} for:item="toDoItem">
-                        <!--lightning-layout key={toDoItem.Id}-->
-                        <div key={toDoItem.Id}>
-                        <c-to-do-item
-                                    class="slds-show slds-is-relative"
-                                    key={toDoItem.Id}
-                                    to-do-item={toDoItem}
-                                    onselect={handleSelect}
-                            ></c-to-do-item>
-                            <lightning-button-icon
-                                    key={toDoItem.Id}
-                                    icon-name="utility:delete"
-                                    onclick={deleteToDoItem}
-                                    data-recordid={toDoItem.Id}
-                            ></lightning-button-icon>
-                        </div>
-                        <!--/lightning-layout-->
-                    </template>
-                </lightning-layout-item>
-            </lightning-layout>
+            <div class="slds-var-m-around_medium slds-border_bottom">
+                <template for:each={toDoItems} for:item="toDoItem">
+                    <lightning-layout key={toDoItem.Id} class="slds-var-m-vertical_x-small wide">
+                        <lightning-layout-item flexibility="grow" class="slds-var-m-around_medium slds-border_bottom">
+                                <c-to-do-item
+                                        class="slds-show slds-is-relative"
+                                        key={toDoItem.Id}
+                                        to-do-item={toDoItem}
+                                        onselect={handleSelect}
+                                ></c-to-do-item>
+                        </lightning-layout-item>
+                        <lightning-layout-item>
+                                <lightning-button-icon
+                                        key={toDoItem.Id}
+                                        icon-name="utility:delete"
+                                        onclick={deleteToDoItem}
+                                        data-recordid={toDoItem.Id}
+                                ></lightning-button-icon>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+
+            </div>
         </template>
         <template if:true={isEmpty}>
             <lightning-layout class="slds-var-m-around_medium">

@@ -1,4 +1,4 @@
-trigger AstapenkoToDoTrigger on To_Do__c (
+trigger ToDoTrigger on To_Do__c (
         before insert,
         before update,
         before delete,
@@ -19,15 +19,15 @@ trigger AstapenkoToDoTrigger on To_Do__c (
     }
 
     if (Trigger.isAfter && Trigger.isInsert) {
-        AstapenkoToDoTriggerHandler.handleAfterInsert(Trigger.new, Trigger.newMap);
+        ToDoTriggerHandler.handleAfterInsert(Trigger.new, Trigger.newMap);
     }
 
     if (Trigger.isAfter && Trigger.isUpdate) {
-        AstapenkoToDoTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.newMap, Trigger.old, Trigger.oldMap);
+        ToDoTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.newMap, Trigger.old, Trigger.oldMap);
     }
 
     if (Trigger.isAfter && Trigger.isDelete) {
-        AstapenkoToDoTriggerHandler.handleAfterDelete(Trigger.old, Trigger.oldMap);
+        ToDoTriggerHandler.handleAfterDelete(Trigger.old, Trigger.oldMap);
     }
 
     if (Trigger.isAfter && Trigger.isUndelete) {

@@ -20,8 +20,10 @@ export default class ToDoItem extends LightningElement {
             this.dispatchEvent(selectEvent);
     }
 
-    @wire(getRecordTypeName, {recId: '$typeName'})
+    @wire(getRecordTypeName, {toDo: '$toDoItem'})
     getSomethingReturned(something) {
-            console.log(something);
+            if(something.data) {
+                this.giveMeTypeName = something.data;
+            }
         };
 }

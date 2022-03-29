@@ -1,5 +1,5 @@
 lightning-layout-item.wide {
-    min-width: 200px;
+    max-width: 2000px;
 }
 
 c-to-do-item {
