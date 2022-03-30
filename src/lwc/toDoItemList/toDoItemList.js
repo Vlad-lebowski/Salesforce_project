@@ -21,7 +21,22 @@ export default class ToDoItemList extends NavigationMixin(LightningElement) {
     selectedAndNotEmpty = false;
     retrievedToDos;
 
-    @wire(findToDoItems, { searchKey: '$searchValue'})
+    todayIsSelected = true;
+    handleTodayClick() {
+        this.todayIsSelected = !this.todayIsSelected;
+    }
+
+    tomorrowIsSelected = true;
+    handleTomorrowClick() {
+        this.tomorrowIsSelected = !this.tomorrowIsSelected;
+    }
+
+    laterIsSelected = true;
+    handleLaterClick() {
+        this.laterIsSelected = !this.laterIsSelected;
+    }
+
+    @wire(findToDoItems, { searchKey: '$searchValue', isTodaySelected : '$todayIsSelected', isTomorrowSelected : '$tomorrowIsSelected', isLaterSelected : '$laterIsSelected'})
     wiredToDoItems(retrievedToDos) {
         this.retrievedToDos = retrievedToDos;
         console.log(retrievedToDos.data);

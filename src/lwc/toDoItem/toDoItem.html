@@ -1,12 +1,15 @@
 <template>
-    <a href="#" onclick={handleClick}>
-        <lightning-layout vertical-align="center">
-            <lightning-layout-item padding="around-small">
-                <p>{toDoItem.Name}</p>
-            </lightning-layout-item>
-            <lightning-layout-item padding="around-small">
-                <p>{giveMeTypeName}</p>
-            </lightning-layout-item>
-        </lightning-layout>
-    </a>
+    <lightning-accordion allow-multiple-sections-open>
+        <lightning-accordion-section name="A" label={toDoItem.Name}>
+            <p>When: {giveMeTypeName}</p>
+            <template if:true={showSubToDos}>
+                <lightning-checkbox-group name="Sub To Dos"
+                                          label="Sub To Dos"
+                                          options={subToDos}
+                                          value={value}
+                                          if:true={retrievedSubToDos.data}
+                ></lightning-checkbox-group>
+            </template>
+        </lightning-accordion-section>
+    </lightning-accordion>
 </template>

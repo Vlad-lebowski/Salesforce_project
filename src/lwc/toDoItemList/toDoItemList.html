@@ -1,5 +1,35 @@
 <template>
     <lightning-card title="To Do Item List" icon-name="standard:logging">
+        <lightning-button-stateful
+                label-when-off="Today"
+                label-when-on="Today"
+                label-when-hover="Today"
+                icon-name-when-off="utility:add"
+                icon-name-when-on="utility:check"
+                icon-name-when-hover="utility:close"
+                selected={todayIsSelected}
+                onclick={handleTodayClick}>
+        </lightning-button-stateful>
+        <lightning-button-stateful
+                label-when-off="Tomorrow"
+                label-when-on="Tomorrow"
+                label-when-hover="Tomorrow"
+                icon-name-when-off="utility:add"
+                icon-name-when-on="utility:check"
+                icon-name-when-hover="utility:close"
+                selected={tomorrowIsSelected}
+                onclick={handleTomorrowClick}>
+        </lightning-button-stateful>
+        <lightning-button-stateful
+                label-when-off="Later"
+                label-when-on="Later"
+                label-when-hover="Later"
+                icon-name-when-off="utility:add"
+                icon-name-when-on="utility:check"
+                icon-name-when-hover="utility:close"
+                selected={laterIsSelected}
+                onclick={handleLaterClick}>
+        </lightning-button-stateful>
         <template if:true={toDoItems}>
             <div class="slds-var-m-around_medium slds-border_bottom">
                 <template for:each={toDoItems} for:item="toDoItem">

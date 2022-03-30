@@ -7,7 +7,7 @@ trigger ToDoTrigger on To_Do__c (
         after delete,
         after undelete) {
     if (Trigger.isBefore && Trigger.isInsert) {
-
+        ToDoTriggerHandler.handleBeforeInsert(Trigger.new);
     }
 
     if (Trigger.isBefore && Trigger.isUpdate) {
