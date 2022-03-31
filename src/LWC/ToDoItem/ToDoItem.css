@@ -7,6 +7,6 @@
 [data-record-type='Later']{
   background-color:  rgba(173,216,230);
 }
-.expired{
+[data-expired='true']{
    border: 4px solid rgb(236, 78, 91);
 }
