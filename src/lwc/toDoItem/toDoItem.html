@@ -1,14 +1,36 @@
 <template>
-    <lightning-accordion allow-multiple-sections-open>
-        <lightning-accordion-section name="A" label={toDoItem.Name}>
+    <lightning-button-stateful
+            label-when-off="Not done"
+            label-when-on="Done"
+            label-when-hover="Undo"
+            icon-name-when-off="utility:add"
+            icon-name-when-on="utility:check"
+            icon-name-when-hover="utility:close"
+            selected={doneIsSelected}
+            class="position"
+            onclick={handleDoneClick}>
+    </lightning-button-stateful>
+    <lightning-accordion allow-multiple-sections-open class="position">
+        <lightning-accordion-section name="A" label={toDoItem.Name} data-record-type = {giveMeTypeName}
+                                     class={toDoItemClass}>
             <p>When: {giveMeTypeName}</p>
-            <template if:true={showSubToDos}>
-                <lightning-checkbox-group name="Sub To Dos"
-                                          label="Sub To Dos"
-                                          options={subToDos}
-                                          value={value}
-                                          if:true={retrievedSubToDos.data}
-                ></lightning-checkbox-group>
+            <lightning-button-menu slot="actions"
+                                   alternative-text="Show menu"
+                                   icon-size="x-small"
+                                   menu-alignment="right">
+                <lightning-menu-item value="Edit" label="Edit" onclick={handleEdit}></lightning-menu-item>
+                <lightning-menu-item value="Delete" label="Delete" onclick={handleDelete}></lightning-menu-item>
+            </lightning-button-menu>
+            <template if:true={showSubToDos} for:each={subToDos} for:item="subToDo">
+                <div key={subToDo.Id}>
+                    <lightning-input type="checkbox" key={subToDo.Id} label={subToDo.Name}></lightning-input>
+                </div>
+<!--                <lightning-checkbox-group name="Sub To Dos"-->
+<!--                                          label="Sub To Dos"-->
+<!--                                          options={subToDos}-->
+<!--                                          value={value}-->
+<!--                                          if:true={retrievedSubToDos.data}-->
+<!--                ></lightning-checkbox-group>-->
             </template>
         </lightning-accordion-section>
     </lightning-accordion>

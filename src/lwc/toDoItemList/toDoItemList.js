@@ -59,29 +59,30 @@ export default class ToDoItemList extends NavigationMixin(LightningElement) {
        refreshApex(this.retrievedToDos);
     }
 
-    deleteToDoItem(event) {
-            const recordId = event.target.dataset.recordid;
-            deleteRecord(recordId)
-                .then(() => {
-                    this.dispatchEvent(
+    handleDelete(event) {
+        const toDoId = event.detail;
+        console.log('toDoId: ' + toDoId);
+        deleteRecord(toDoId)
+             .then(() => {
+                   this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Success',
                             message: 'To Do Item deleted',
                             variant: 'success'
                         })
-                    );
-                    return refreshApex(this.retrievedToDos);
-                })
-                .catch((error) => {
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Error deleting record',
-                            message: reduceErrors(error).join(', '),
-                            variant: 'error'
-                        })
-                    );
-                });
-        }
+                   );
+                   return refreshApex(this.retrievedToDos);
+             })
+             .catch((error) => {
+                  this.dispatchEvent(
+                      new ShowToastEvent({
+                          title: 'Error deleting record',
+                          message: reduceErrors(error).join(', '),
+                          variant: 'error'
+                      })
+                  );
+             });
+    }
 
         @wire(MessageContext)
             messageContext;

@@ -80,4 +80,9 @@ public with sharing class ToDoController {
         String recordTypeId = Schema.SObjectType.To_Do__c.getRecordTypeInfosByName().get(recordTypeName).getRecordTypeId();
         return recordTypeId;
     }
+
+    @AuraEnabled(Cacheable=true)
+    public static Boolean getIsDone(To_Do__c toDo) {
+        return toDo.Is_Done__c;
+    }
 }

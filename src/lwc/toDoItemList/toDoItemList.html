@@ -40,15 +40,8 @@
                                         key={toDoItem.Id}
                                         to-do-item={toDoItem}
                                         onselect={handleSelect}
+                                        ondeletetodo= {handleDelete}
                                 ></c-to-do-item>
-                        </lightning-layout-item>
-                        <lightning-layout-item>
-                                <lightning-button-icon
-                                        key={toDoItem.Id}
-                                        icon-name="utility:delete"
-                                        onclick={deleteToDoItem}
-                                        data-recordid={toDoItem.Id}
-                                ></lightning-button-icon>
                         </lightning-layout-item>
                     </lightning-layout>
                 </template>
