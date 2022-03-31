@@ -1,0 +1,16 @@
+<template>
+  <lightning-accordion allow-multiple-sections-open>
+    <lightning-accordion-section 
+    name="A" 
+    label={toDoItem.Name} 
+    data-record-type = {giveMeTypeName}
+    class={toDoItemClass}
+    >
+      <p id="type-name" >When: {giveMeTypeName}</p>
+      <template if:true={showSubToDos}>
+        <lightning-checkbox-group name="Sub To Dos" label="Sub To Dos" options={subToDos} value={value}
+          if:true={retrievedSubToDos.data}></lightning-checkbox-group>
+      </template>
+    </lightning-accordion-section>
+  </lightning-accordion>
+</template>
