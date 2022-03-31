@@ -39,6 +39,7 @@
                                         class="slds-show slds-is-relative"
                                         key={toDoItem.Id}
                                         to-do-item={toDoItem}
+                                        to-do-expired={toDoItem.Is_Expired__c}
                                         onselect={handleSelect}
                                         ondeletetodo= {handleDelete}
                                 ></c-to-do-item>

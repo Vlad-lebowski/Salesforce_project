@@ -23,6 +23,7 @@ public with sharing class ToDoController {
                             Status__c,
                             Is_Done__c,
                             External_Id__c,
+                            Is_Expired__c,
                             RecordTypeId,
                             CreatedDate
                     FROM To_Do__c
@@ -38,6 +39,7 @@ public with sharing class ToDoController {
                             Status__c,
                             Is_Done__c,
                             External_Id__c,
+                            Is_Expired__c,
                             RecordTypeId,
                             CreatedDate
                     FROM To_Do__c

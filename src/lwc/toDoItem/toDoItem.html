@@ -12,7 +12,7 @@
     </lightning-button-stateful>
     <lightning-accordion allow-multiple-sections-open class="position">
         <lightning-accordion-section name="A" label={toDoItem.Name} data-record-type = {giveMeTypeName}
-                                     class={toDoItemClass}>
+                                     class={toDoItemClass} data-expired={toDoExpired}>
             <p>When: {giveMeTypeName}</p>
             <lightning-button-menu slot="actions"
                                    alternative-text="Show menu"

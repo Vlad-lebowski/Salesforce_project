@@ -11,6 +11,7 @@ import { updateRecord } from "lightning/uiRecordApi";
 
 export default class ToDoItem extends NavigationMixin(LightningElement) {
     @api toDoItem;
+    @api toDoExpired;
     giveMeTypeName;
     subToDos;
     retrievedSubToDos;
@@ -34,6 +35,7 @@ export default class ToDoItem extends NavigationMixin(LightningElement) {
 
     handleDoneClick() {
         this.doneIsSelected = !this.doneIsSelected;
+        this.toDoExpired = !this.toDoExpired;
         const fields = {};
 
         fields[ID_FIELD.fieldApiName] = this.toDoItem.Id;
