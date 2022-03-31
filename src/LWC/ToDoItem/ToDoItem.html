@@ -5,6 +5,7 @@
     label={toDoItem.Name} 
     data-record-type = {giveMeTypeName}
     class={toDoItemClass}
+    data-expired={toDoItem.Is_Expired__c}
     >
       <p id="type-name" >When: {giveMeTypeName}</p>
       <template if:true={showSubToDos}>
