@@ -7,6 +7,7 @@ import TO_DO_OBJECT from '@salesforce/schema/To_Do__c';
 import NAME_FIELD from '@salesforce/schema/To_Do__c.Name';
 import STATUS_FIELD from '@salesforce/schema/To_Do__c.Status__c';
 import RECORD_TYPE_ID_FIELD from '@salesforce/schema/To_Do__c.RecordTypeId';
+import IS_PERSONAL_FIELD from '@salesforce/schema/To_Do__c.IsPersonal__c';
 import getRecordTypeNames from '@salesforce/apex/ToDoController.getRecordTypeNames';
 import getRecordTypeId from '@salesforce/apex/ToDoController.getRecordTypeId';
 
@@ -18,6 +19,7 @@ export default class ToDoItemCreateRecord extends LightningElement {
     statusValue = '';
     recordType = '';
     recordTypeId = '';
+    isPersonal = true;
 
 
     @wire(getPicklistValues, { recordTypeId: '012000000000000AAA', fieldApiName: STATUS_FIELD })
@@ -72,11 +74,16 @@ export default class ToDoItemCreateRecord extends LightningElement {
         this.recordType = event.detail.value;
     }
 
+    handleIsPersonalChange(event) {
+        this.isPersonal = event.detail.checked;
+    }
+
     createToDo() {
         const fields = {};
         fields[NAME_FIELD.fieldApiName] = this.name;
         fields[STATUS_FIELD.fieldApiName] = this.statusValue;
         fields[RECORD_TYPE_ID_FIELD.fieldApiName] = this.recordTypeId;
+        fields[IS_PERSONAL_FIELD.fieldApiName] = this.isPersonal;
         const recordInput = { apiName: TO_DO_OBJECT.objectApiName, fields };
         createRecord(recordInput)
             .then(() => {

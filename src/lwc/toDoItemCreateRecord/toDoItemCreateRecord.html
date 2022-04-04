@@ -24,6 +24,13 @@
                     value={recordType}
                     class="slds-var-m-bottom_medium"
             ></lightning-combobox>
+            <lightning-input
+                    label="Is Personal"
+                    type="checkbox"
+                    checked={isPersonal}
+                    onchange={handleIsPersonalChange}
+                    class="slds-var-m-bottom_x-small"
+            ></lightning-input>
             <lightning-button
                     label="Create To Do"
                     variant="brand"

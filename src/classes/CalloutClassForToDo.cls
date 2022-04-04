@@ -16,9 +16,11 @@ public with sharing class CalloutClassForToDo {
             System.debug(response.getBody());
             Map<String, Object> params = (Map<String, Object>)JSON.deserializeUntyped(response.getBody());
             System.debug(params);
-            To_Do__c toDo = [SELECT Id, External_Id__c FROM To_Do__c WHERE Id =:toDoId LIMIT 1];
-            toDo.put('External_Id__c', params.get('Id'));
-            update toDo;
+            List<To_Do__c> toDos = [SELECT Id, External_Id__c FROM To_Do__c WHERE Id =:toDoId LIMIT 1];
+            if(toDos.size() > 0) {
+                toDos[0].put('External_Id__c', params.get('Id'));
+                update toDos[0];
+            }
         }
         ToDoTriggerHandler.recordBeingProcessed = false;
     }

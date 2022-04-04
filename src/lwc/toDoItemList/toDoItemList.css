@@ -1,3 +1,8 @@
+lightning-formatted-text.padding {
+    padding-left: 20px;
+    padding-right: 10px;
+}
+
 lightning-layout-item.wide {
     max-width: 2000px;
 }
@@ -11,7 +16,6 @@ c-to-do-item {
 }
 
 c-to-do-item:before {
-    content: 'c-to-do-item hello';
     color: rgb(221, 219, 218);
     position: absolute;
     top: -9px;

@@ -1,6 +1,7 @@
 public with sharing class ToDoController {
     @AuraEnabled(Cacheable=true)
-    public static List<To_Do__c> findToDoItems(String searchKey, Boolean isTodaySelected, Boolean isTomorrowSelected, Boolean isLaterSelected) {
+    public static List<To_Do__c> findToDoItems(String searchKey, Boolean isTodaySelected, Boolean isTomorrowSelected,
+            Boolean isLaterSelected, Boolean doneIsSelected, Boolean notDoneIsSelected) {
         String key = '%' + searchKey + '%';
         List<Id> recordTypeIds = new List<Id>();
         if (isTodaySelected) {
@@ -24,10 +25,12 @@ public with sharing class ToDoController {
                             Is_Done__c,
                             External_Id__c,
                             Is_Expired__c,
+                            Expired_By_Date__c,
                             RecordTypeId,
                             CreatedDate
                     FROM To_Do__c
                     WHERE RecordTypeId IN :recordTypeIds
+                    AND (Is_Done__c =:doneIsSelected OR Is_Done__c =:!notDoneIsSelected)
                     WITH SECURITY_ENFORCED
                     LIMIT 100
             ];
@@ -39,11 +42,13 @@ public with sharing class ToDoController {
                             Status__c,
                             Is_Done__c,
                             External_Id__c,
+                            Expired_By_Date__c,
                             Is_Expired__c,
                             RecordTypeId,
                             CreatedDate
                     FROM To_Do__c
                     WHERE Name LIKE :key AND RecordTypeId IN :recordTypeIds
+                    AND (Is_Done__c =:doneIsSelected OR Is_Done__c =:!notDoneIsSelected)
                     WITH SECURITY_ENFORCED
                     LIMIT 100
             ];
@@ -52,7 +57,7 @@ public with sharing class ToDoController {
 
     @AuraEnabled(Cacheable=true)
     public static List<Sub_To_Do__c> getSubToDos(To_Do__c toDo) {
-        List<Sub_To_Do__c> subToDos = [SELECT Id, Name, To_Do__c FROM Sub_To_Do__c WHERE To_Do__c=:toDo.Id LIMIT 20];
+        List<Sub_To_Do__c> subToDos = [SELECT Id, Name, To_Do__c, Is_Done__c FROM Sub_To_Do__c WHERE To_Do__c=:toDo.Id LIMIT 20];
         return subToDos;
     }
 

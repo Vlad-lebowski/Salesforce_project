@@ -17,9 +17,10 @@ export default class ToDoItemList extends NavigationMixin(LightningElement) {
     searchValue = '';
     error;
     toDoItems;
-    isEmpty = false;
-    selectedAndNotEmpty = false;
     retrievedToDos;
+    isEmpty = false;
+    statusNotSelected = false;
+    visibleToDos;
 
     todayIsSelected = true;
     handleTodayClick() {
@@ -36,22 +37,35 @@ export default class ToDoItemList extends NavigationMixin(LightningElement) {
         this.laterIsSelected = !this.laterIsSelected;
     }
 
-    @wire(findToDoItems, { searchKey: '$searchValue', isTodaySelected : '$todayIsSelected', isTomorrowSelected : '$tomorrowIsSelected', isLaterSelected : '$laterIsSelected'})
+    doneIsSelected = true;
+    handleDoneClick() {
+        this.doneIsSelected = !this.doneIsSelected;
+    }
+
+    notDoneIsSelected = true;
+    handleNotDoneClick() {
+       this.notDoneIsSelected = !this.notDoneIsSelected;
+    }
+
+    @wire(findToDoItems, { searchKey: '$searchValue', isTodaySelected : '$todayIsSelected',
+     isTomorrowSelected : '$tomorrowIsSelected', isLaterSelected : '$laterIsSelected',
+     doneIsSelected: '$doneIsSelected', notDoneIsSelected: '$notDoneIsSelected'})
     wiredToDoItems(retrievedToDos) {
         this.retrievedToDos = retrievedToDos;
         console.log(retrievedToDos.data);
+        console.log('doneIsSelected:' + this.doneIsSelected);
+        console.log('notDoneIsSelected:' + this.notDoneIsSelected);
           if (retrievedToDos.data) {
                this.toDoItems = retrievedToDos.data;
-               //this.error = undefined;
-               if (this.toDoItems.length == 0) {
+               if (this.doneIsSelected == false && this.notDoneIsSelected == false) {
+                   this.statusNotSelected = true;
                    this.isEmpty = true;
-                   this.selectedAndNotEmpty = false;
                } else {
+                   this.statusNotSelected = false;
                    this.isEmpty = false;
                }
           } else if (retrievedToDos.error) {
                this.error = retrievedToDos.error;
-               //this.toDoItems = undefined;
           }
     }
 
@@ -67,7 +81,7 @@ export default class ToDoItemList extends NavigationMixin(LightningElement) {
                    this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Success',
-                            message: 'To Do Item deleted',
+                            message: 'To Do deleted',
                             variant: 'success'
                         })
                    );
@@ -111,6 +125,11 @@ export default class ToDoItemList extends NavigationMixin(LightningElement) {
         connectedCallback() {
             this.subscribeToMessageChannel();
         }
+
+    updateToDoHandler(event){
+        this.visibleToDos = [...event.detail.records];
+        console.log(event.detail.records);
+    }
 
 
 }
