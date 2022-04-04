@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <name>Security ToDos</name>
+    <queueMembers>
+        <users>
+            <user>insightssecurity@00d5j000006zgroeae.com</user>
+            <user>kattykattte11@gmail.com</user>
+            <user>vsastapenko1@gmail.com</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>To_Do__c</sobjectType>
+    </queueSobject>
+</Queue>

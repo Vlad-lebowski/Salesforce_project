@@ -1,0 +1,25 @@
+lightning-formatted-text.padding {
+    padding-left: 20px;
+    padding-right: 10px;
+}
+
+lightning-layout-item.wide {
+    max-width: 2000px;
+}
+
+c-to-do-item {
+    border: solid var(--lwc-borderWidthThin, 1px) #ecebea;
+    border-radius: var(--lwc-borderRadiusMedium, 4px);
+    margin: var(--lwc-borderWidthThin, 1px) 0;
+    padding: 3px var(--lwc-varSpacingXxxSmall, 2px) 0
+        var(--lwc-varSpacingXxxSmall, 2px);
+}
+
+c-to-do-item:before {
+    color: rgb(221, 219, 218);
+    position: absolute;
+    top: -9px;
+    left: var(--lwc-varSpacingXxSmall, 4px);
+    background-color: var(--lwc-colorBackgroundAlt, #ffffff);
+    padding: 0 var(--lwc-varSpacingXxSmall, 4px);
+}
