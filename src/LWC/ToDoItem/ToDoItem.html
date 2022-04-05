@@ -1,16 +1,37 @@
 <template>
-  <lightning-accordion allow-multiple-sections-open>
-    <lightning-accordion-section 
-    name="A" 
-    label={toDoItem.Name} 
-    data-record-type = {giveMeTypeName}
-    class={toDoItemClass}
-    data-expired={toDoItem.Is_Expired__c}
-    >
-      <p id="type-name" >When: {giveMeTypeName}</p>
-      <template if:true={showSubToDos}>
-        <lightning-checkbox-group name="Sub To Dos" label="Sub To Dos" options={subToDos} value={value}
-          if:true={retrievedSubToDos.data}></lightning-checkbox-group>
+  <lightning-layout class="slds-grid_align-spread">
+    <lightning-layout-item class="done-button">
+      <lightning-button-stateful label-when-off="Not done" label-when-on="Done" label-when-hover="Undo"
+        icon-name-when-off="utility:add" icon-name-when-on="utility:check" icon-name-when-hover="utility:close"
+        selected={doneIsSelected} onclick={handleDoneClick} class="done-button" >
+      </lightning-button-stateful>
+    </lightning-layout-item>
+    <lightning-layout-item class="status-section">
+      <p class="status"> Status: {showStatus}  </p>
+    </lightning-layout-item>
+  </lightning-layout>
+  <lightning-accordion allow-multiple-sections-open class="position" onclick={handleClick}>
+    <lightning-accordion-section name="A" label={toDoItem.Name} data-record-type={giveMeTypeName} class="toDo-card"
+      data-expired={toDoExpired}>
+      <p>Deadline: {giveMeTypeName}</p>
+      <p>Created: {showCreatedDate}</p>
+      <lightning-button-menu slot="actions" alternative-text="Show menu" icon-size="x-small" menu-alignment="right">
+        <lightning-menu-item value="Edit" label="Edit" onclick={handleEdit}></lightning-menu-item>
+        <lightning-menu-item value="Ready to Take" label="Ready to Take" onclick={handleReadyToTake}>
+        </lightning-menu-item>
+        <lightning-menu-item value="In progress" label="In progress" onclick={handleInProgress}></lightning-menu-item>
+        <lightning-menu-item value="Delete" label="Delete" onclick={handleDelete}></lightning-menu-item>
+        <lightning-menu-item value="Sub" label="Add new SubToDo" onclick={handleNewSubToDo}></lightning-menu-item>
+      </lightning-button-menu>
+      <template if:true={showSubToDos} for:each={subToDos} for:item="subToDo">
+        <lightning-layout key={subToDo.Id}>
+          <lightning-input type="checkbox" key={subToDo.Id} label={subToDo.Name} data-subtodoid={subToDo.Id}
+            onchange={handleSubDoneClick} checked={subToDo.Is_Done__c}></lightning-input>
+          <lightning-button-menu alternative-text="Show menu" icon-size="x-small" menu-alignment="left">
+            <lightning-menu-item value="Delete SubToDo" label="Delete SubToDo" data-subtodoid={subToDo.Id}
+              onclick={handleDeleteSubToDo}></lightning-menu-item>
+          </lightning-button-menu>
+        </lightning-layout>
       </template>
     </lightning-accordion-section>
   </lightning-accordion>
