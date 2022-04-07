@@ -1,6 +1,6 @@
 <template>
-    <lightning-card title="To Do Item List" icon-name="standard:logging">
-        <div> <lightning-formatted-text value="Record types:" class="padding"></lightning-formatted-text>
+    <lightning-card title="To Do Item List" icon-name="action:new_notebook" class="toDo-board">
+        <div class="filter-section"> <lightning-formatted-text value="Record types:"></lightning-formatted-text>
             <lightning-button-stateful
                     label-when-off="Today"
                     label-when-on="Today"
@@ -32,7 +32,7 @@
                     onclick={handleLaterClick}>
             </lightning-button-stateful>
         </div>
-        <div> <lightning-formatted-text value="Is Done:" class="padding"></lightning-formatted-text>
+        <div class="filter-section"> <lightning-formatted-text value="Is Done:"></lightning-formatted-text>
             <lightning-button-stateful
                     label-when-off="Done"
                     label-when-on="Done"
@@ -55,10 +55,10 @@
             </lightning-button-stateful>
         </div>
         <template if:true={toDoItems}>
-            <div class="slds-var-m-around_medium slds-border_bottom" if:false={statusNotSelected}>
+            <div class="slds-var-m-around_medium slds-border_bottom toDo-card" if:false={statusNotSelected}>
                 <template for:each={visibleToDos} for:item="toDoItem">
                     <lightning-layout key={toDoItem.Id} class="slds-var-m-vertical_x-small wide">
-                        <lightning-layout-item flexibility="grow" class="slds-var-m-around_medium slds-border_bottom">
+                        <lightning-layout-item flexibility="grow" class="slds-var-m-around_medium">
                                 <c-to-do-item
                                         class="slds-show slds-is-relative"
                                         key={toDoItem.Id}

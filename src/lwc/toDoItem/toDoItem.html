@@ -37,6 +37,7 @@
                                      label={subToDo.Name}
                                      data-subtodoid={subToDo.Id}
                                      onchange={handleSubDoneClick}
+                                     disabled={subToDoDisabled}
                                      checked={subToDo.Is_Done__c}></lightning-input>
                     <lightning-button-menu alternative-text="Show menu"
                                            icon-size="x-small"

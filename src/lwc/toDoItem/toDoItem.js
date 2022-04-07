@@ -33,13 +33,14 @@ export default class ToDoItem extends NavigationMixin(LightningElement) {
     createdDate;
     showCreatedDate;
     showStatus;
+    subToDoDisabled;
 
     @wire(getIsDone, {toDo: '$toDoItem'})
     retrievedIsDoneField(retrievedIsDone) {
         if(retrievedIsDone.data) {
             this.retrievedIsDone = retrievedIsDone;
             this.doneIsSelected = retrievedIsDone.data;
-
+            this.subToDoDisabled = this.toDoItem.Is_Done__c;
         } else if (retrievedIsDone.error) {
             this.errorIsDone = retrievedSubToDos.error;
         }
@@ -72,6 +73,7 @@ export default class ToDoItem extends NavigationMixin(LightningElement) {
         } else if (this.doneIsSelected == false && this.expiredByDate == false) {
             this.toDoExpired = false;
         }
+        this.subToDoDisabled = !this.subToDoDisabled;
 
         event.preventDefault();
 
