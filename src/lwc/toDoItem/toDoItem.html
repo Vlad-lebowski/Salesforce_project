@@ -19,8 +19,8 @@
     <lightning-accordion allow-multiple-sections-open class="position" onclick={handleClick}>
         <lightning-accordion-section name="A" label={toDoItem.Name} data-record-type = {giveMeTypeName}
                                      class={toDoItemClass} data-expired={toDoExpired}>
-            <p>Deadline: {giveMeTypeName}</p>
-            <p>Created: {showCreatedDate}</p>
+            <p class="inside-text">Deadline: {giveMeTypeName}</p>
+            <p class="inside-text">Created: {showCreatedDate}</p>
             <lightning-button-menu slot="actions"
                                    alternative-text="Show menu"
                                    icon-size="x-small"
@@ -37,6 +37,7 @@
                                      label={subToDo.Name}
                                      data-subtodoid={subToDo.Id}
                                      onchange={handleSubDoneClick}
+                                     disabled={subToDoDisabled}
                                      checked={subToDo.Is_Done__c}></lightning-input>
                     <lightning-button-menu alternative-text="Show menu"
                                            icon-size="x-small"
