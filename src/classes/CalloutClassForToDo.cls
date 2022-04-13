@@ -43,6 +43,7 @@ public with sharing class CalloutClassForToDo {
 
     @Future(Callout=true)
     public static void makePutCallout(String toDotId, String toDoName, String status, Boolean isDone) {
+        ToDoTriggerHandler.recordBeingProcessed = true;
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         request.setEndpoint('callout:SF/services/apexrest/To_Do__c/' + toDotId);
@@ -57,5 +58,6 @@ public with sharing class CalloutClassForToDo {
             System.debug('The status code returned was not expected: ' +
                     response.getStatusCode() + ' ' + response.getStatus());
         }
+        ToDoTriggerHandler.recordBeingProcessed = false;
     }
 }
