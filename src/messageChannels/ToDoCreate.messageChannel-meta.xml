@@ -1,0 +1,5 @@
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>To Do Create</masterLabel>
+    <isExposed>true</isExposed>
+    <description>Channel used to communicate between the toDoItemCreateRecord and toDoItemList LWCs.</description>
+</LightningMessageChannel>

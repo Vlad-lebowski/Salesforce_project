@@ -15,7 +15,6 @@ Provide reports, dashboards</description>
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
-    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>My To Do List</label>
     <navType>Standard</navType>
     <tabs>NewToDo</tabs>

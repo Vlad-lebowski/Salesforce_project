@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Sub To Do</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Sub To Dos</value>
+    </caseValues>
+    <fields>
+        <label><!-- Is Done --></label>
+        <name>Is_Done__c</name>
+    </fields>
+    <fields>
+        <label><!-- To Do --></label>
+        <name>To_Do__c</name>
+        <relationshipLabel><!-- Sub To Dos --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>
