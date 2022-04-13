@@ -4,9 +4,9 @@
     <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
     <backgroundStartColor>#FFFFFF</backgroundStartColor>
     <chartTheme>dark</chartTheme>
-    <colorPalette>accessible</colorPalette>
+    <colorPalette>bluegrass</colorPalette>
     <dashboardChartTheme>dark</dashboardChartTheme>
-    <dashboardColorPalette>accessible</dashboardColorPalette>
+    <dashboardColorPalette>bluegrass</dashboardColorPalette>
     <dashboardGridLayout>
         <dashboardGridComponents>
             <colSpan>3</colSpan>
