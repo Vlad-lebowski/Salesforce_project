@@ -1,0 +1,91 @@
+<template>
+    <lightning-card title="To Do List" icon-name="action:new_notebook" class="toDo-board">
+        <div class="filter-section"> <lightning-formatted-text value="Record types:"></lightning-formatted-text>
+            <lightning-button-stateful
+                    label-when-off="Today"
+                    label-when-on="Today"
+                    label-when-hover="Today"
+                    icon-name-when-off="utility:add"
+                    icon-name-when-on="utility:check"
+                    icon-name-when-hover="utility:close"
+                    selected={todayIsSelected}
+                    onclick={handleTodayClick}>
+            </lightning-button-stateful>
+            <lightning-button-stateful
+                    label-when-off="Tomorrow"
+                    label-when-on="Tomorrow"
+                    label-when-hover="Tomorrow"
+                    icon-name-when-off="utility:add"
+                    icon-name-when-on="utility:check"
+                    icon-name-when-hover="utility:close"
+                    selected={tomorrowIsSelected}
+                    onclick={handleTomorrowClick}>
+            </lightning-button-stateful>
+            <lightning-button-stateful
+                    label-when-off="Later"
+                    label-when-on="Later"
+                    label-when-hover="Later"
+                    icon-name-when-off="utility:add"
+                    icon-name-when-on="utility:check"
+                    icon-name-when-hover="utility:close"
+                    selected={laterIsSelected}
+                    onclick={handleLaterClick}>
+            </lightning-button-stateful>
+        </div>
+        <div class="filter-section"> <lightning-formatted-text value="Is Done:"></lightning-formatted-text>
+            <lightning-button-stateful
+                    label-when-off="Done"
+                    label-when-on="Done"
+                    label-when-hover="Done"
+                    icon-name-when-off="utility:add"
+                    icon-name-when-on="utility:check"
+                    icon-name-when-hover="utility:close"
+                    selected={doneIsSelected}
+                    onclick={handleDoneClick}>
+            </lightning-button-stateful>
+            <lightning-button-stateful
+                    label-when-off="Not Done"
+                    label-when-on="Not Done"
+                    label-when-hover="NotDone"
+                    icon-name-when-off="utility:add"
+                    icon-name-when-on="utility:check"
+                    icon-name-when-hover="utility:close"
+                    selected={notDoneIsSelected}
+                    onclick={handleNotDoneClick}>
+            </lightning-button-stateful>
+        </div>
+        <template if:true={toDoItems}>
+            <div class="slds-var-m-around_medium slds-border_bottom toDo-card" if:false={statusNotSelected}>
+                <template for:each={visibleToDos} for:item="toDoItem">
+                    <lightning-layout key={toDoItem.Id} class="slds-var-m-vertical_x-small wide">
+                        <lightning-layout-item flexibility="grow" class="slds-var-m-around_medium">
+                                <c-to-do-item
+                                        class="slds-show slds-is-relative"
+                                        key={toDoItem.Id}
+                                        to-do-item={toDoItem}
+                                        to-do-expired={toDoItem.Is_Expired__c}
+                                        expired-by-date={toDoItem.Expired_By_Date__c}
+                                        onclick={handleSelect}
+                                        ondoneischanged={handleSelect}
+                                        ondeletetodo= {handleDelete}
+                                ></c-to-do-item>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+                <div slot="footer" class="slds-var-m-vertical_medium">
+                    <c-pagination records={toDoItems} onupdate={updateToDoHandler}></c-pagination>
+                </div>
+            </div>
+        </template>
+        <template if:true={isEmpty}>
+            <lightning-layout class="slds-var-m-around_medium">
+                <lightning-layout-item>
+                    <p>Thank You Mario! But Our Princess Is In Another Castle!</p>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+        <template if:true={error}>
+            <c-error-panel errors={error}></c-error-panel>
+        </template>
+    </lightning-card>
+</template>
