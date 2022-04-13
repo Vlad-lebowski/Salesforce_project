@@ -6,8 +6,9 @@ public with sharing class CalloutClassForToDo {
         HttpRequest request = new HttpRequest();
         request.setEndpoint('callout:SF/services/apexrest/To_Do__c/' + toDoId);
         request.setMethod('POST');
+        String name = toDoName + ' post';
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
-        request.setBody('{"name":"' + toDoName + '", "status":"' + status + '", "isDone":"' + isDone + '", "recordType":"' + recordType + '"}');
+        request.setBody('{"name":"' + name + '", "status":"' + status + '", "isDone":"' + isDone + '", "recordType":"' + recordType + '"}');
         HttpResponse response = http.send(request);
         if(response.getStatusCode() != 200) {
             System.debug('The status code returned was not expected: ' +
@@ -43,12 +44,14 @@ public with sharing class CalloutClassForToDo {
 
     @Future(Callout=true)
     public static void makePutCallout(String toDotId, String toDoName, String status, Boolean isDone) {
+        ToDoTriggerHandler.recordBeingProcessed = true;
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         request.setEndpoint('callout:SF/services/apexrest/To_Do__c/' + toDotId);
         request.setMethod('PUT');
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
-        request.setBody('{"name":"' + toDoName + '", "status":"' + status + '", "isDone":"' + isDone + '"}');
+        String name = toDoName + ' put';
+        request.setBody('{"name":"' + name + '", "status":"' + status + '", "isDone":"' + isDone + '"}');
         HttpResponse response = http.send(request);
         if(response.getStatusCode() == 200) {
             System.debug('Upserted the following To Do:');
@@ -57,5 +60,6 @@ public with sharing class CalloutClassForToDo {
             System.debug('The status code returned was not expected: ' +
                     response.getStatusCode() + ' ' + response.getStatus());
         }
+        ToDoTriggerHandler.recordBeingProcessed = false;
     }
 }
