@@ -1,7 +1,0 @@
-global class SchedualerForOldRecordsBatch implements Schedulable {
-	 global void execute(SchedulableContext sc)
-     {
-     BatchJobToDeleteOldRecords b = new BatchJobToDeleteOldRecords(); 
-       database.executeBatch(b);
-     }
-}
