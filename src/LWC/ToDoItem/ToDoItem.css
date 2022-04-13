@@ -1,0 +1,21 @@
+[data-record-type='Today']{
+  background-color: #E8DFD6;
+}
+[data-record-type='Tomorrow']{
+  background-color:  #DDBEA7;
+}
+[data-record-type='Later']{
+  background-color:  rgba(173,216,230);
+}
+[data-expired='true']{
+  /* border: 4px solid #996244; */
+  /* border: 4px solid #ffa07a;
+   border: 4px solid #ffdab9; */
+   border: 4px solid #f4a460;
+}
+.toDo-card{
+  border-radius: 5px;
+}
+.status{
+  color: #1E90FF;
+}
