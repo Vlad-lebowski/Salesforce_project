@@ -19,7 +19,7 @@
     <lightning-accordion allow-multiple-sections-open class="position" onclick={handleClick}>
         <lightning-accordion-section name="A" label={toDoItem.Name} data-record-type = {giveMeTypeName}
                                      class={toDoItemClass} data-expired={toDoExpired}>
-            <p class="inside-text">Deadline: {giveMeTypeName}</p>
+            <p class="inside-text">Record Type: {giveMeTypeName}</p>
             <p class="inside-text">Created: {showCreatedDate}</p>
             <lightning-button-menu slot="actions"
                                    alternative-text="Show menu"
